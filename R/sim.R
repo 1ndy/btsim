@@ -25,7 +25,7 @@ gen_survivors <- function(n_insects, res_allele_freq, percent_refuge, pest_densi
   p_sq = (1-res_allele_freq)^2
   h_sq = 2 * res_allele_freq * (1-res_allele_freq)
   #####################
-  # adaptive darwinain selection for recessive trait
+  # adaptive darwinian selection for recessive trait
   w11 = 0
   w12 = 0
   w22 = 0
