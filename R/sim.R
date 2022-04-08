@@ -61,17 +61,17 @@ gen_survivors <- function(n_insects, res_allele_freq, percent_refuge, pest_densi
   ####################
   percent_bt = 1 - percent_refuge
   recessive_genotype_count = round(n_insects * q_sq,0)
-  bt_sus_insects = n_insects - recessive_genotype_count
-  
+  bt_sus_insects = round(n_insects - recessive_genotype_count,0)
+
   # P(not on refuge plant)
   deaths = rbinom(1, bt_sus_insects, percent_bt)
-  new_n_insects = max(n_insects - deaths,0)
-  new_n_insects = calc_offspring_count(new_n_insects)
+  new_n_insects = max(bt_sus_insects - deaths + recessive_genotype_count,0)
+  new_n_insects = round(calc_offspring_count(new_n_insects),0)
   new_pest_density = new_n_insects / (acreage * plant_density)
   yield_loss = calc_yield_loss_percent(new_pest_density)
   new_raf = 0
-  if(1-res_allele_freq != 1) {
-    new_raf = (((h_sq / 2) * w12)+(q_sq)*w22) / (p_sq*w11 + h_sq*w12 + q_sq*w22)
+  if(1-res_allele_freq != 1 && new_n_insects > 0) {
+    new_raf = (((h_sq / 2) * w12)+(q_sq*w22)) / (p_sq*w11 + h_sq*w12 + q_sq*w22)
   }
   r = c(new_n_insects, new_raf, percent_refuge, new_pest_density, calc_crop_yield(bpa, calc_crop_loss(yield_loss, percent_refuge, bpa)))
   return(r)
