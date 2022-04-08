@@ -13,9 +13,9 @@ calc_crop_yield <- function(bpa, crop_loss) {
 
 calc_offspring_count <- function(n_insects) {
   n_female = 0.5 * n_insects
-  eggs_per_female = 1000
+  eggs_per_female = (n_female/200)*rnorm(200,mean=1000, sd=200)
   success_rate_of_egg = 0.2
-  offspring = n_female * eggs_per_female * success_rate_of_egg
+  offspring = round(sum(eggs_per_female * success_rate_of_egg),0)
   return(offspring)
 }
 
