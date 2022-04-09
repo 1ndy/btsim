@@ -62,10 +62,11 @@ server <- function(input, output) {
 
   output$download_data <- downloadHandler(
     filename = function() {
-      sprintf("bt_simulation-%S.csv", format(Sys.time(), "%Y-%m-%d_%H:%M:%S"))
+      paste0("bt_simulation-",format(Sys.time(), "%Y-%m-%d_%H-%M-%S"),".csv")
     },
     content = function(file) {
-      write.csv(sim(), file)
+      df = sim()
+      write.csv(df, file)
     }
 
   )
