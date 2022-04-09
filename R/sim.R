@@ -24,8 +24,9 @@ gen_survivors <- function(n_insects, res_allele_freq, percent_refuge, pest_densi
   q_sq = res_allele_freq^2
   p_sq = (1-res_allele_freq)^2
   h_sq = 2 * res_allele_freq * (1-res_allele_freq)
+  total_plants = acreage * plant_density
   #####################
-  # adaptive darwinian selection for recessive trait
+  # calculate fitness values based on selection type
   w11 = 0
   w12 = 0
   w22 = 0
@@ -61,11 +62,12 @@ gen_survivors <- function(n_insects, res_allele_freq, percent_refuge, pest_densi
   ####################
   percent_bt = 1 - percent_refuge
   recessive_genotype_count = round(n_insects * q_sq,0)
-  bt_sus_insects = round(n_insects - recessive_genotype_count,0)
+  bt_sus_insects = n_insects - recessive_genotype_count
 
   # P(not on refuge plant)
-  deaths = rbinom(1, bt_sus_insects, percent_bt)
-  new_n_insects = max(bt_sus_insects - deaths + recessive_genotype_count,0)
+  death_causing_plants = rbinom(1, total_plants, percent_bt)
+  deaths = (p_sq * pest_density) * death_causing_plants
+  new_n_insects = n_insects - deaths #max(bt_sus_insects - deaths + recessive_genotype_count,0)
   new_n_insects = round(calc_offspring_count(new_n_insects),0)
   new_pest_density = new_n_insects / (acreage * plant_density)
   yield_loss = calc_yield_loss_percent(new_pest_density)
