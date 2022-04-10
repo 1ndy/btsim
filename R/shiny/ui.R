@@ -5,12 +5,12 @@ helptext <- function() {
   div(
     h1("Bt Simulation"),
     h2("About"),
-    p("Bt simulation models the effect of bacillus thuringenesis-derived 
+    p("Bt simulation models the effect of bacillus thuringenesis-derived
       toxins in transgenic corn against the western corn rootworm. It relies on
       principles from population genetics to compute population level changes
       in census number and allele frequency."),
     br(),
-    p("This simulation was created for ANSC 446 in SP22 at the University of 
+    p("This simulation was created for ANSC 446 in SP22 at the University of
        Illinois. Send inquiries to (demeyer3 (at) illinois (dot) edu)"),
     h2("Parameters"),
     HTML(
@@ -80,7 +80,8 @@ helptext <- function() {
       </table>'
     ),
     h2("References"),
-    p('1. Chiang, H. C. "Bionomics of the northern and western corn rootworms." Annual review of entomology 18.1 (1973): 47-72.',a('https://doi.org/10.1146/annurev.en.18.010173.000403')),
+    p('1. Chiang, H. C. "Bionomics of the northern and western corn rootworms." Annual review of entomology 18.1 (1973): 47-72.',a('https://doi.org/10.1146/annurev.en.18.010173.000403'),br(),br(),
+      '2. Tabashnik, Bruce E., Thierry Brevault, and Yves Carriere. "Insect resistance to Bt crops: lessons from the first billion acres." Nature biotechnology 31.6 (2013): 510-521.')
   )
 }
 
@@ -92,10 +93,10 @@ ui <- fluidPage(
                  numericInput("n_generations", "Generations", 10, min=2, max=200, step=5),
                  numericInput("n_insects", "Initial Pest Population Size", 600000),
                  numericInput("resistant_allele_freq", "Resistant Allele Frequency (recessive)", 0, min=0, max=1, step=0.01),
-                 fluidRow(column(6, numericInput("s_val", "selection coefficient", 0.5, min=0, step=0.1)), 
+                 fluidRow(column(6, numericInput("s_val", "selection coefficient", 0.5, min=0, step=0.1)),
                           column(6, numericInput("h_val", "Dominance Coefficient", 0.5, min=0, step=0.1))
                  ),
-                 selectInput("selection_mode", "Selection Type", c("Darwinian (Dominant)"="darD", 
+                 selectInput("selection_mode", "Selection Type", c("Darwinian (Dominant)"="darD",
                                                                    "Darwinian (Recessive)"="darR",
                                                                    "Purifying" = "puri",
                                                                    "Recessive Lethal"="recl",
@@ -120,7 +121,7 @@ ui <- fluidPage(
                            column(6,plotOutput("pest_density_v_generations"))
                          )
                 ),
-                tabPanel("Table", 
+                tabPanel("Table",
                          dataTableOutput("sim_data"),
                          downloadButton("download_data", "Download Data")
                 ),
